@@ -1,0 +1,18 @@
+#container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 25% 75%;
+}
+
+#navbar {
+    width: 25%;
+    position: fixed;
+}
+
+#main-menu {
+    list-style-type: none;
+}
+
+#main-doc {
+    grid-column: 2/3;
+}
