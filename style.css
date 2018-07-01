@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 #container {
     width: 100%;
     display: grid;
@@ -6,13 +10,33 @@
 
 #navbar {
     width: 25%;
+    height: 100%;
     position: fixed;
+    border-right: 1px solid #000;
+}
+
+#navbar header {
+    text-align: center;
 }
 
 #main-menu {
     list-style-type: none;
+    padding: 0;
 }
 
 #main-doc {
+    padding-left: 40px;
     grid-column: 2/3;
+}
+
+.nav-link {
+    display: block;
+    padding: 20px 15px;
+    border-top: 1px solid #000;
+    color: #000;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    background-color: #efefef;
 }
