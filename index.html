@@ -23,6 +23,7 @@
                     <li><a href="#Pseudo-classes_And_Pseudo-elements" class="nav-link">Pseudo-classes and pseudo-elements</a></li>
                     <li><a href="#Combinators_And_Multiple_Selectors" class="nav-link">Combinators and multiple selectors</a></li>
                     <li><a href="#CSS_Values_And_Units" class="nav-link">CSS values and units</a></li>
+                    <li><a href="#Cascade_And_Inheritance" class="nav-link">Cascade and inheritance</a></li>
                 </ul>
             </nav>
             <main id="main-doc">
@@ -719,6 +720,208 @@ div {
                         </li>
                     </ol>          
                 </section>
+                <section id="Cascade_And_Inheritance" class="main-section">
+                    <header>
+                        <h2>Cascade and inheritance</h2>
+                    </header>
+                    <h3>The cascade</h3>
+                    <p>CSS is an acronym for Cascading Style Sheets, which indicates that the notion of the cascade 
+                        is important. At its most basic level it indicates that the order of CSS rules matter, but 
+                        it's more complex than that. What selectors win out in the cascade depends on three factors 
+                        (these are listed in order of weight — earlier ones will overrule later ones):</p>
+                    <ol>
+                        <li>Importance</li>
+                        <li>Specificity</li>
+                        <li>Source order</li>
+                    </ol>
+                    <h4>Importance</h4>
+                    <p>In CSS, there is a special piece of syntax you can use to make sure that a certain declaration 
+                        will always win over all others: <strong>!important.</strong> Let's look at an example:</p>
+<code>
+<pre>
+    #winning {
+        background-color: red;
+        border: 1px solid black;
+    }
+        
+    .better {
+        background-color: gray;
+        border: none !important;
+    }
+        
+    p {
+        background-color: blue;
+        color: white;
+        padding: 5px;
+    }
+</pre>
+</code>    
+                    <p>Let's walk through this to see what's happening:</p>
+                    <ol>
+                        <li>You'll see that the third rule's color and padding values have been applied, 
+                            but the background-color hasn't. Why? Really all three should surely apply, 
+                            because rules later in the source order generally override earlier rules.</li>
+                        <li>However, The rules above it win, because IDs/class selectors have higher 
+                            specificity than element selectors (you'll learn more about this in the next section).</li> 
+                        <li>Both elements have a class of better, but the 2nd one has an id of winning too. 
+                            Since IDs have an even higher specificity than classes (you can only have one element 
+                            with each unique ID on a page, but many elements with the same class — ID selectors 
+                            are very specific in what they target), the red background color and the 1 pixel black 
+                            border should both be applied to the 2nd element, with the first element getting the 
+                            gray background color, and no border, as specified by the class.</li> 
+                        <li>The 2nd element does get the red background color, but no border. Why? Because of the 
+                            !important declaration in the second rule — including this after border: none means that 
+                            this declaration will win over the border value in the previous rule, even though the 
+                            ID has higher specificity.</li>          
+                    </ol>
+                    <h4>Specificity</h4>
+                    <p>Specificity is basically a measure of how specific a selector is — how many elements it could match. 
+                        As shown in the example seen above, element selectors have low specificity. Class selectors have 
+                        a higher specificity, so will win against element selectors. ID selectors have an even higher 
+                        specificity, so will win against class selectors. The only way to win against an ID selector is 
+                        to use !important.</p>
+                    <p>The amount of specificity a selector has is measured using four different values (or components), 
+                        which can be thought of as thousands, hundreds, tens and ones — four single digits in four columns:</p>    
+                    <ol>
+                        <li><em>Thousands:</em> Score one in this column if the declaration is inside a style attribute (such declarations 
+                            don't have selectors, so their specificity is always simply 1000.) Otherwise 0.</li>
+                        <li><em>Hundreds:</em> Score one in this column for each ID selector contained inside the overall selector.</li>
+                        <li><em>Tens:</em> Score one in this column for each class selector, attribute selector, or pseudo-class contained inside 
+                            the overall selector.</li>
+                        <li><em>Ones:</em> Score one in this column for each element selector or pseudo-element contained inside the overall selector.</li>
+                    </ol>    
+                    <p>Before we move on, let's look at an example in action. Here is the HTML we are going to use:</p>
+<code>
+<pre>
+    /* specificity: 0101 */
+    #outer a {
+        background-color: red;
+    }
+    
+    /* specificity: 0201 */
+    #outer #inner a {
+        background-color: blue;
+    }
+    
+    /* specificity: 0104 */
+    #outer div ul li a {
+        color: yellow;
+    }
+    
+    /* specificity: 0113 */
+    #outer div ul .nav a {
+        color: white;
+    }
+    
+    /* specificity: 0024 */
+    div div li:nth-child(2) a:hover {
+        border: 10px solid black;
+    }
+    
+    /* specificity: 0023 */
+    div li:nth-child(2) a:hover {
+        border: 10px dashed black;
+    }
+    
+    /* specificity: 0033 */
+    div div .nav:nth-child(2) a:hover {
+        border: 10px double black;
+    }
+    
+    a {
+        display: inline-block;
+        line-height: 40px;
+        font-size: 20px;
+        text-decoration: none;
+        text-align: center;
+        width: 200px;
+        margin-bottom: 10px;
+    }
+    
+    ul {
+        padding: 0;
+    }
+    
+    li {
+        list-style-type: none;
+    }
+</pre>
+</code>
+                    <h4>Source order</h4>
+                    <p>As mentioned above, if multiple competing selectors have the same importance and specificity, 
+                        the third factor that comes into play to help decide which rule wins is source order — later 
+                        rules will win over earlier rules. For example:</p>
+<code>
+<pre>
+    p {
+        color: blue;
+    }
+        
+    /* This rule will win over the first one */
+    p {
+        color: red;
+    }
+</pre>
+</code>    
+                    <p>Whereas in this example the first rule wins because source order is overruled by specificity:</p>
+<code>
+<pre>
+    /* This rule will win */
+    .footnote {
+        color: blue;
+    }
+    
+    p {
+        color: red;
+    }
+</pre>
+</code>
+                    <h3>Inheritance</h3>
+                    <p>CSS inheritance is the last piece we need to investigate to get all the information and understand 
+                        what style is applied to an element. The idea is that some property values applied to an element 
+                        will be inherited by that element's children, and some won't.</p>
+                    <p>CSS provides four special universal property values for specifying inheritance:</p>    
+                    <ul>
+                        <li><code>inherit</code>: Sets the property value applied to a selected element to be the same as 
+                            that of its parent element.</li>
+                        <li><code>initial</code>: Sets the property value applied to a selected element to be the same as 
+                            the value set for that element in the browser's default style sheet. If no value is set by the 
+                            browser's default style sheet and the property is naturally inherited, then the property value 
+                            is set to inherit instead.</li>
+                        <li><code>unset</code>: Resets the property to its natural value, which means that if the property 
+                            is naturally inherited it acts like inherit, otherwise it acts like initial.</li>
+                        <li><code>revert</code>: Reverts the property to the value it would have had if the current origin 
+                            had not applied any styles to it. In other words, the property's value is set to the user 
+                            stylesheet's value for the property (if one is set), otherwise the property's value is taken 
+                            from the user-agent's default stylesheet.</li>
+                    </ul>
+                </section>
+                <section id="CSS_Selectors" class="main-section">
+                        <header>
+                            <h2>ff</h2>
+                        </header>
+                        <p>There are 6 main categories for CSS selectors:</p>
+                        <ul>
+                            <li><strong>Simple selectors:</strong> match one or more elements based on element
+                            type, class, or id</li>
+                            <li><strong>Attribute selectors:</strong> match one or more elements based on their
+                            attributes/attribute values</li>
+                            <li><strong>Pseudo-classes:</strong> match one or more elements that exist in a certain state, 
+                            such as an element that is being hovered over by the mouse pointer, or a checkbox that is 
+                            currently disabled or checked, or an element that is the first child of its parent in the 
+                            DOM tree</li>
+                            <li><strong>Pseudo-elements:</strong> match one or more parts of content that are in a certain 
+                            position in relation to an element, for example the first word of each paragraph, or generated 
+                            content appearing just before an element</li>
+                            <li><strong>Combinators:</strong> these are not exactly selectors themselves, but ways of combining 
+                            two or more selectors in useful ways for very specific selections. So for example, you could select 
+                            only paragraphs that are direct descendants of divs, or paragraphs that come directly after 
+                            headings</li>
+                            <li><strong>Multiple selectors:</strong> Again, these are not separate selectors; the idea is that 
+                            you can put multiple selectors on the same CSS rule, separated by commas, to apply a single set of 
+                            declarations to all the elements selected by those selectors</li>
+                        </ul> 
+                    </section>
             </main>
         </div>
     </body>
