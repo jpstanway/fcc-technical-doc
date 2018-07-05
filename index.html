@@ -19,6 +19,10 @@
                     <li><a href="#CSS_Syntax" class="nav-link">CSS syntax</a></li>
                     <li><a href="#CSS_Selectors" class="nav-link">CSS selectors</a></li>
                     <li><a href="#Simple_Selectors" class="nav-link">Simple selectors</a></li>
+                    <li><a href="#Attribute_Selectors" class="nav-link">Attribute selectors</a></li>
+                    <li><a href="#Pseudo-classes_And_Pseudo-elements" class="nav-link">Pseudo-classes and pseudo-elements</a></li>
+                    <li><a href="#Combinators_And_Multiple_Selectors" class="nav-link">Combinators and multiple selectors</a></li>
+                    <li><a href="#CSS_Values_And_Units" class="nav-link">CSS values and units</a></li>
                 </ul>
             </nav>
             <main id="main-doc">
@@ -196,7 +200,7 @@
                     </header>
                     <p>There are 6 main categories for CSS selectors:</p>
                     <ul>
-                        <li><strong>Simple selectors:</strong>> match one or more elements based on element
+                        <li><strong>Simple selectors:</strong> match one or more elements based on element
                         type, class, or id</li>
                         <li><strong>Attribute selectors:</strong> match one or more elements based on their
                         attributes/attribute values</li>
@@ -299,20 +303,421 @@ div {
 </pre>    
 </code>                
                 </section>
-                <section id="topic_6" class="main-section">
+                <section id="Attribute_Selectors" class="main-section">
                     <header>
-                        <h2>Topic 5</h2>
+                        <h2>Attribute Selectors</h2>
                     </header>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation 
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                    <code>2 + 2 = 5</code>
+                    <p><strong>Attribute selectors</strong> are a special kind of selector that will match
+                    elements based on their HTML attributes and attribute values. Attribute selectors can be
+                    divided into two categories depending on the way they match attribute values: <em>Presence
+                    and value</em> attribute selectors and <em>Substring value</em> attribute selectors.</p>
+                    <p>Here are some quick examples of <strong>presence and value</strong> attribute selectors:</p>
+                    <ul>
+                        <li><code>[attr]</code>: this selector will select all elements with the attribute
+                        'attr', whatever its value</li>
+                        <li><code>[attr=val]</code>: this selector will select all elements with the attribute
+                        'attr', but only if its value equals 'val'</li>
+                        <li><code>[attr~=val]</code>: this selector will select all elements with the attribute
+                        'attr', but only if 'val' is one of a space-separated list of words contained in 'attr's value</li>
+                    </ul>  
+                    <p>Here is a visual representation of all 3 of these types:</p>
+<code>
+<pre>
+    /* All elements with the attribute "data-vegetable"
+        are given green text */
+    [data-vegetable] {
+        color: green;
+    }
+
+        /* All elements with the attribute "data-vegetable"
+        with the exact value "liquid" are given a golden
+        background color */
+    [data-vegetable="liquid"] {
+        background-color: goldenrod;
+    }
+
+    /* All elements with the attribute "data-vegetable",
+        containing the value "spicy", even among others,
+        are given a red text color */
+    [data-vegetable~="spicy"] {
+        color: red;
+    }
+</pre>
+</code>
+                <p><strong>Substring value</strong> attribute selectors are also known as "RegExp-like selectors",
+                because they offer flexible matching in a similar fashion to regular expressions:</p>
+                <ul>
+                    <li><code>[attr|=val]</code>: this selector will select all elements with the attribute
+                    'attr' for which the value is exactly 'val' or starts with 'val'</li>
+                    <li><code>[attr^=val]</code>: this selector will select all elements with the attribute
+                    'attr' for which the value starts with 'val'</li>
+                    <li><code>[attr$=val]</code>: this selector will select all elements with the attribute
+                    'attr' for which the value ends with 'val'</li>
+                    <li><code>[attr*=val]</code>: this selector will select all elements with the attribute
+                    'attr' for which the value contains the substring 'val' (A substring is simply part of a 
+                    string, e.g. "cat" is a substring in the string "caterpillar".)</li>
+                </ul>
+                <p>Let's see an example of these types:</p>
+<code>
+<pre>
+    /* Classic usage for language selection */
+    [lang|="fr"] {
+        font-weight: bold;
+    }
+
+    /* All elements with the attribute "data-quantity", for which
+        the value starts with "optional" */
+    [data-quantity^="optional"] {
+        opacity: 0.5;
+    }
+
+    /* All elements with the attribute "data-quantity", for which
+        the value ends with "kg" */
+    [data-quantity$="kg"] {
+        font-weight: bold;
+    }
+
+    /* All elements with the attribute "data-vegetable" containing
+        the substring "not spicy" are turned back to green */
+    [data-vegetable*="not spicy"] {
+        color: green;
+    }
+</pre>
+</code>
+                </section>
+                <section id="Pseudo-classes_And_Pseudo-elements" class="main-section">
+                    <header>
+                        <h2>Pseudo-classes and pseudo-elements</h2>
+                    </header>
+                    <p>These don't select elements, but rather certain parts of elements, 
+                        or elements only in certain contexts.</p>
+                    <p>A CSS <strong>pseudo-class</strong> is a keyword added to the end of a selector, preceded by a colon (:), 
+                        which is used to specify that you want to style the selected element but only when it 
+                        is in a certain state. </p>
+                    <p>Example of pseudo-classes:</p>    
+<code>
+<pre>
+    /* These styles will style our link
+        in all states */
+    a {
+        color: blue;
+        font-weight: bold;
+    }
+        
+    /* We want visited links to be the same color
+        as non visited links */
+    a:visited {
+        color: blue;
+    }
+        
+    /* We highlight the link when it is
+        hovered (mouse), activated
+        or focused (keyboard) */
+    a:hover,
+    a:active,
+    a:focus {
+        color: darkred;
+        text-decoration: none;
+    }
+</pre>
+</code>
+                    <p><strong>Pseudo-elements</strong> are very much like pseudo-classes, but they have differences. They are keywords, 
+                        this time preceded by two colons (::), that can be added to the end of selectors to select a 
+                        certain part of an element.</p>
+                    <p>Pseudo-element example:</p>
+<code>
+<pre>
+    /* All elements with an attribute "href" with values
+        starting with "http" will have an arrow added after their
+        content (to indicate they are external links) */
+    [href^=http]::after {
+        content: '⤴';
+    } 
+</pre>
+</code>
+                </section>
+                <section id="Combinators_And_Multiple_Selectors" class="main-section">
+                    <header>
+                        <h2>Combinators and multiple selectors</h2>
+                    </header>
+                    <p>Using one selector at a time is useful, but can be inefficient in some situations. 
+                        CSS selectors become even more useful when you start combining them to perform 
+                        fine-grained selections. CSS has several ways to select elements based on how they 
+                        are related to one another. Those relationships are expressed with <strong>combinators</strong> as 
+                        follows (A and B represent any selector seen above):</p>
+                    <table>
+                        <thead>
+                            <th>Name</th>
+                            <th>Syntax</th>
+                            <th>Selects</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Group of selectors</td>
+                                <td>A, B</td>
+                                <td>Any element matching A and/or B (see Group of selectors on one rule, below - 
+                                    Group of Selectors is not considered to be a combinator).</td>
+                            </tr>
+                            <tr>
+                                <td>Descendant selector</td>
+                                <td>A B</td>
+                                <td>Any element matching B that is a descendant of an element matching 
+                                    A (that is, a child, or a child of a child, etc.).</td>
+                            </tr>
+                            <tr>
+                                <td>Child selector</td>
+                                <td>A > B</td>
+                                <td>Any element matching B that is a direct child of an element matching A.</td>
+                            </tr>
+                            <tr>
+                                <td>Adjacent sibling selector</td>
+                                <td>A + B</td>
+                                <td>Any element matching B that is the next sibling of an element matching A 
+                                    (that is, the next child of the same parent).</td>
+                            </tr>
+                            <tr>
+                                <td>General sibling selector</td>
+                                <td>A ~ B</td>
+                                <td>Any element matching B that is one of the next siblings of an element 
+                                    matching A (that is, one of the next children of the same parent).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Let's look at some examples:</p>
+<code>
+<pre>
+    /* Basic table setup */
+    table {
+        font: 1em sans-serif;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    
+    /* All &lt;td&gt;s within a &lt;table&gt; and all &lt;th&gt;s within a &lt;table&gt;
+        Comma is not a combinator, it just allows you to target
+        several selectors with the same CSS ruleset */
+    table td, table th {
+        border : 1px solid black;
+        padding: 0.5em 0.5em 0.4em;
+    }
+    
+    /* All &lt;th&gt;s within &lt;thead&gt;s that are within &lt;table&gt;s */
+    table thead th {
+        color: white;
+        background: black;
+    }
+    
+    /* All &lt;td&gt;s preceded by another &lt;td&gt;,
+        within a &lt;tbody&gt;, within a &lt;table&gt; */
+    table tbody td + td {
+        text-align: center;
+    }
+    
+    /* All &lt;td&gt;s that are a last child,
+        within a &lt;tbody&gt;, within a &lt;table&gt; */
+    table tbody td:last-child {
+        text-align: right
+    }
+    
+    /* All &lt;th&gt;s, within a &lt;tfoot&gt;s, within a &lt;table&gt; */
+    table tfoot th {
+        text-align: right;
+        border-top-width: 5px;
+        border-left: none;
+        border-bottom: none;
+    }
+    
+    /* All &lt;td&gt;s preceded by a &lt;th&gt;, within a &lt;table&gt; */
+    table th + td {
+        text-align: right;
+        border-top-width: 5px;
+        color: white;
+        background: black;
+    }
+    
+    /* All pseudo-elements "before" &lt;td&gt;s that are a last child,
+        appearing within elements with a class of "with-currency" that
+        also have an attribute "lang" with the value "en-US" */
+    .with-currency[lang="en-US"] td:last-child::before {
+        content: '$';
+    }
+    
+    /* All pseudo-elements "after" &lt;td&gt;s that are a last child,
+        appearing within elements with the class "with-currency" that
+        also have an attribute "lang" with the value "fr" */
+    .with-currency[lang="fr"] td:last-child::after {
+        content: ' €';
+    }
+</pre>
+</code>
+                    <p>You have seen multiple examples of this in action already, 
+                        but let's spell it out for clarification. You can write <strong>groups 
+                        of selectors</strong> separated by commas to apply the same rule to multiple 
+                        sets of selected elements at once. For example:</p>
+<code>
+<pre>
+    p, li {
+        font-size: 1.6em;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: helvetica, 'sans serif';
+    }
+</pre>
+</code>    
+                </section>
+                <section id="CSS_Values_And_Units" class="main-section">
+                    <header>
+                        <h2>CSS values and units</h2>
+                    </header>
+                    <p>There are many value types in CSS, some of them very common and some of them that 
+                        you'll rarely come across. We won't cover all of them exhaustively in this article; 
+                        just the ones that you are likely to find most useful as you continue on your path 
+                        towards mastering CSS. In this article we will cover the following CSS values:</p>
                     <ol>
-                        <li>Step 1</li>
-                        <li>Step 2</li>
-                        <li>Step 3</li>
-                    </ol>  
+                        <li>
+                            <strong>Numeric values:</strong>
+                            <p><em>Absolute units</em> will always be the same size regardless of any others
+                            related settings. Absolute units are as follows:</p>
+                            <ul>
+                                <li><code>px</code>: pixels (most common)</li>
+                                <li><code>mm</code>, <code>cm</code>, <code>in</code>: millimeters, centimeters, or inches</li>
+                                <li><code>pt</code>, <code>pc</code>: points(1/72 of an inch) or picas (12 points)</li>
+                            </ul>
+                            <p><em>Relative units</em> are relative to the current element's font-size or viewport size:</p>
+                            <ul>
+                                <li><code>em</code>: 1em is the same as the font-size of the current element (more specifically, 
+                                    the width of a capital letter M.) The default base font-size given to web pages by web 
+                                    browsers before CSS styling is applied is 16 pixels, which means the computed value of 
+                                    1em is 16 pixels for an element by default. But beware — font sizes are inherited by elements 
+                                    from their parents, so if different font sizes have been set on parent elements, the pixel 
+                                    equivalent of an em can start to become complicated. Don't worry too much about this for 
+                                    now — we'll cover inheritance and font-sizing in more detail in later articles and modules. 
+                                    <strong>ems are the most common relative unit you'll use in web development.</strong></li>
+                                <li><code>ex</code>, <code>ch</code>: Respectively these are the height of a lower case x, 
+                                    and the width of the number 0. These are not as commonly used or well-supported as ems.</li>
+                                <li><code>rem</code>: The rem (root em) works in exactly the same way as the em, except that 
+                                    it will always equal the size of the default base font-size; inherited font sizes will have 
+                                    no effect, so this sounds like a much better option than ems, although rems don't work in 
+                                    older versions of Internet Explorer.</li>
+                                <li><code>vw</code>, <code>vh</code>: Respectively these are 1/100th of the width of the viewport, 
+                                    and 1/100th of the height of the viewport. Again, these are not as widely supported as rems.</li>
+                            </ul>
+                            <p><em>Percentages</em>: You can also use percentage values to specify most things that can be specified 
+                                by specific numeric values. This allows us to create, for example, boxes whose width will always shift 
+                                to be a certain percentage of their parent container's width. This can be compared to boxes that have 
+                                their width set to a certain unit value (like px or ems), which will always stay the same length, even 
+                                if their parent container's width changes.</p>
+                        </li>
+                        <li>
+                            <strong>Colors</strong>
+                            <p>There are many ways to specify color in CSS, some of which are more recently implemented than others. 
+                                The same color values can be used everywhere in CSS, whether you are specifying text color, background 
+                                color, or whatever else.</p>
+                            <p>The simplest, oldest color types in CSS are the color <strong>keywords</strong>. These are specific strings representing 
+                                particular color values. For example, the following code:</p>
+<code>
+<pre>
+    p {
+        background-color: red;
+    }
+</pre>
+</code>        
+                        <p>The next ubiquitous color system is hexadecimal colors, or hex codes. Each hex value consists of a hash/pound symbol 
+                            (#) followed by six hexadecimal numbers, each of which can take a value between 0 and f (which represents 15) 
+                            — so 0123456789abcdef. Each pair of values represents one of the channels — red, green and blue — 
+                            and allows us to specify any of the 256 available values for each (16 x 16 = 256.). So for example:</p>
+<code>
+<pre>
+    /* equivalent to the red keyword */
+    p:nth-child(1) {
+        background-color: #ff0000;
+    }
+    
+    /* equivalent to the blue keyword */
+    p:nth-child(2) {
+        background-color: #0000ff;
+    }
+    
+    /* has no exact keyword equivalent */
+    p:nth-child(3) {
+        background-color: #e0b0ff;
+    }
+</pre>
+</code>    
+                        <p>The third scheme we'll talk about here is <strong>RGB</strong>. An RGB value is a function — rgb() — which is given three parameters 
+                            that represent the red, green and blue channel values of the colors, in much the same way as hex values. 
+                            The difference with RGB is that each channel is represented not by two hex digits, but by a decimal number between 0 and 255.
+                            Let's rewrite our last example to use RGB colors:</p>
+<code>
+<pre>
+    /* equivalent to the red keyword */
+    p:nth-child(1) {
+        background-color: rgb(255,0,0);
+    }
+    
+    /* equivalent to the blue keyword */
+    p:nth-child(2) {
+        background-color: rgb(0,0,255);
+    }
+    
+    /* has no exact keyword equivalent */
+    p:nth-child(3) {
+        background-color: rgb(224,176,255);
+    }
+</pre>
+</code>                 <p>Slightly less well supported than RGB is the HSL model (not on old versions of IE), which was implemented after 
+                            much interest from designers — instead of red, green and blue values, the hsl() function accepts hue, saturation, 
+                            and lightness values, which are used to distinguish between the 16.7 million colors, but in a different way:</p>
+                        <ul>
+                            <li><em>hue:</em> the base shade of the color. This takes a value between 0 and 360, presenting the angles round a color wheel.</li>
+                            <li><em>saturation:</em> how saturated is the color? This takes a value from 0-100%, where 0 is no color (it will appear as a shade of grey), 
+                                and 100% is full color saturation</li>
+                            <li><em>lightness:</em> how light or bright is the color? This takes a value from 0-100%, where 0 is no light (it will appear completely black) 
+                                and 100% is full light (it will appear completely white)</li>
+                        </ul>   
+                        <p>Now we'll rewrite our example to use HSL colors:</p>
+<code>
+<pre>
+    /* equivalent to the red keyword */
+    p:nth-child(1) {
+        background-color: hsl(0,100%,50%);
+    }
+    
+    /* equivalent to the blue keyword */
+    p:nth-child(2) {
+        background-color: hsl(240,100%,50%);
+    }
+    
+    /* has no exact keyword equivalent */
+    p:nth-child(3) {
+        background-color: hsl(276,100%,85%);
+    }
+</pre>
+</code> 
+                        <p>RGB and HSL both have corresponding modes — <strong>RGBA and HSLA</strong> — that allow you to set not only what 
+                            color you want to display, but also what transparency you want that color to have. Their corresponding 
+                            functions take the same parameters, plus a fourth value in the range 0–1 — which sets the transparency, 
+                            or alpha channel. 0 is completely transparent, and 1 is completely opaque.</p>
+                        <p>There is another way to specify transparency via CSS — the <strong>opacity</strong> property. Instead of setting the transparency of 
+                            a particular color, this sets the transparency of all selected elements and their children. Again, let's study 
+                            an example so we can see the difference. Now the CSS:</p>
+<code>
+<pre>
+    /* Red with RGBA */
+    p:nth-child(1) {
+        background-color: rgba(255,0,0,0.5);
+    }
+    
+    /* Red with opacity */
+    p:nth-child(2) {
+        background-color: rgb(255,0,0);
+        opacity: 0.5;
+    }
+</pre>
+</code>    
+                        </li>
+                    </ol>          
                 </section>
             </main>
         </div>
