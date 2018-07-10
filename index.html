@@ -449,40 +449,40 @@
                         fine-grained selections. CSS has several ways to select elements based on how they 
                         are related to one another. Those relationships are expressed with <strong>combinators</strong> as 
                         follows (A and B represent any selector seen above):</p>
-                    <table>
+                    <table id="selector-table">
                         <thead>
                             <th>Name</th>
                             <th>Syntax</th>
-                            <th>Selects</th>
+                            <th class="no-border-r">Selects</th>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Group of selectors</td>
                                 <td>A, B</td>
-                                <td>Any element matching A and/or B (see Group of selectors on one rule, below - 
+                                <td class="no-border-r">Any element matching A and/or B (see Group of selectors on one rule, below - 
                                     Group of Selectors is not considered to be a combinator).</td>
                             </tr>
                             <tr>
                                 <td>Descendant selector</td>
                                 <td>A B</td>
-                                <td>Any element matching B that is a descendant of an element matching 
+                                <td class="no-border-r">Any element matching B that is a descendant of an element matching 
                                     A (that is, a child, or a child of a child, etc.).</td>
                             </tr>
                             <tr>
                                 <td>Child selector</td>
                                 <td>A > B</td>
-                                <td>Any element matching B that is a direct child of an element matching A.</td>
+                                <td class="no-border-r">Any element matching B that is a direct child of an element matching A.</td>
                             </tr>
                             <tr>
                                 <td>Adjacent sibling selector</td>
                                 <td>A + B</td>
-                                <td>Any element matching B that is the next sibling of an element matching A 
+                                <td class="no-border-r">Any element matching B that is the next sibling of an element matching A 
                                     (that is, the next child of the same parent).</td>
                             </tr>
                             <tr>
-                                <td>General sibling selector</td>
-                                <td>A ~ B</td>
-                                <td>Any element matching B that is one of the next siblings of an element 
+                                <td class="no-border-b">General sibling selector</td>
+                                <td class="no-border-b">A ~ B</td>
+                                <td class="no-border-r no-border-b">Any element matching B that is one of the next siblings of an element 
                                     matching A (that is, one of the next children of the same parent).</td>
                             </tr>
                         </tbody>
