@@ -1,3 +1,8 @@
+
+/**
+** GENERAL
+**/
+
 html, body {
     min-width: 100% !important;
     height: 100%;
@@ -47,6 +52,10 @@ pre {
     grid-template-columns: 25% 75%;
 }
 
+/**
+** NAVIGATION
+**/
+
 #navbar {
     width: 25%;
     height: 100%;
@@ -68,6 +77,10 @@ pre {
     font-size: 1.1em;
     font-weight: 500;
 }
+
+/**
+** DOCUMENT
+**/
 
 #main-doc {
     padding: 0 20px 0 40px;
@@ -92,6 +105,10 @@ pre {
     border-bottom: 1px dashed #c1c1c1;
 }
 
+/**
+** CLASSES
+**/
+
 .no-border-r {
     border-right: 0 !important;
 }
@@ -111,6 +128,10 @@ pre {
 .nav-link:hover {
     background-color: #efefef;
 }
+
+/**
+** MEDIA QUERIES
+**/
 
 @media screen and (max-width: 900px) {
     #container {
